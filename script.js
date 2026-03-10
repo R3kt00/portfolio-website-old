@@ -62,6 +62,17 @@ document.getElementById('hamburger').addEventListener('click', () => {
   document.getElementById('sidebar').classList.toggle('open');
 });
 
+// ── CLOSE SIDEBAR ON OUTSIDE CLICK ──────────
+document.addEventListener('click', (e) => {
+  const sidebar   = document.getElementById('sidebar');
+  const hamburger = document.getElementById('hamburger');
+  if (sidebar.classList.contains('open') &&
+      !sidebar.contains(e.target) &&
+      !hamburger.contains(e.target)) {
+    sidebar.classList.remove('open');
+  }
+});
+
 
 // ── TYPEWRITER EFFECT ────────────────────────
 const phrases = [
