@@ -11,6 +11,32 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── GITHUB HEATMAP ──────────────────────── */
+    .gh-heatmap { margin-top: 36px; max-width: 700px; }
+    .gh-heatmap-title { font-size:0.58rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--amber); margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; }
+    .gh-heatmap-total { color:var(--text-dim); font-size:0.58rem; letter-spacing:0.05em; }
+    .gh-heatmap-total span { color:var(--mint); }
+    .gh-heatmap-months { display:flex; margin-bottom:4px; gap:0; overflow:hidden; }
+    .gh-heatmap-month-label { font-size:0.5rem; color:var(--text-dim); flex:1; text-align:left; letter-spacing:0.04em; min-width:0; }
+    .gh-heatmap-grid-wrap { display:flex; gap:3px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; }
+    .gh-heatmap-grid-wrap::-webkit-scrollbar { display:none; }
+    .gh-heatmap-col { display:flex; flex-direction:column; gap:3px; }
+    .gh-heatmap-cell { width:10px; height:10px; border-radius:2px; border:1px solid rgba(255,255,255,0.03); transition:transform 0.1s; cursor:default; position:relative; flex-shrink:0; }
+    .gh-heatmap-cell:hover { transform:scale(1.4); z-index:10; }
+    .gh-cell-0 { background:rgba(255,255,255,0.04); }
+    .gh-cell-1 { background:#4a0a0a; }
+    .gh-cell-2 { background:#880f0f; }
+    .gh-cell-3 { background:#bb1a1a; }
+    .gh-cell-4 { background:#ff2222; box-shadow:0 0 4px rgba(255,34,34,0.4); }
+    .gh-heatmap-legend { display:flex; align-items:center; gap:4px; margin-top:8px; justify-content:flex-end; }
+    .gh-heatmap-legend-label { font-size:0.5rem; color:var(--text-dim); letter-spacing:0.05em; }
+    .gh-heatmap-legend-cell { width:9px; height:9px; border-radius:2px; }
+    .gh-heatmap-loading { font-size:0.72rem; color:var(--text-dim); padding:8px 0; }
+    .gh-heatmap-cell[data-tip]:hover::after { content:attr(data-tip); position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:var(--ink2); border:1px solid rgba(204,0,0,0.3); color:var(--text); font-family:'JetBrains Mono',monospace; font-size:0.58rem; padding:4px 8px; border-radius:4px; white-space:nowrap; z-index:9999; pointer-events:none; }
+    @media(max-width:900px) { .gh-heatmap-cell { width:8px; height:8px; } }
+  </style>
 </head>
 <body>
 
@@ -72,6 +98,17 @@
       <div class="stat-chip"><div class="stat-value">∞</div><div class="stat-label">Curiosity</div></div>
     </div>
     <div class="keyboard-hint" id="keyboard-hint">press <kbd>1</kbd>–5 to navigate</div>
+    <!-- ── CONTRIBUTION HEATMAP ── -->
+    <div class="gh-heatmap" id="gh-heatmap">
+      <div class="gh-heatmap-title">
+        <span>// contributions</span>
+        <span class="gh-heatmap-total" id="gh-heatmap-total"></span>
+      </div>
+      <div id="gh-heatmap-body">
+        <div class="gh-heatmap-loading">loading heatmap<span class="typewriter-cursor" style="margin-left:4px"></span></div>
+      </div>
+    </div>
+
     <div class="github-activity" id="github-activity">
       <div class="gh-activity-title">// recent activity</div>
       <div class="gh-events" id="gh-events">
